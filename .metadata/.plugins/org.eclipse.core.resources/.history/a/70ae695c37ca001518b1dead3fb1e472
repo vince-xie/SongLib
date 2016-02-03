@@ -1,0 +1,65 @@
+package models;
+
+public class Song {
+	
+	private String name;
+	private String album;
+	private String artist;
+	private int year;
+	
+	public Song(String name, String album){
+		this.name = name;
+		this.album = album;
+	}
+	
+	public Song(String name, String album, String artist){
+		this(name, album);
+		this.artist = artist;
+	}
+	
+	public Song(String name, String album, int year){
+		this(name, album);
+		this.year = year;
+	}
+	
+	public Song(String name, String album, String artist, int year){
+		this(name, album, artist);
+		this.year = year;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public String getAlbum(){
+		return album;
+	}
+	
+	public String getArtist(){
+		return artist;
+	}
+	
+	public int getYear(){
+		return year;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public void setAlbum(String album){
+		this.album = album;
+	}
+	
+	public void setArtist(String artist){
+		this.artist = artist;
+	}
+	
+	public void setYear(int year){
+		this.year = year;
+	}
+	
+	public String toString(){
+		return "Name: " + name + "\n Album: " + album + "Artist: " + artist + "\n Year: " + year;
+	}
+}
