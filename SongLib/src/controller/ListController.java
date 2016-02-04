@@ -1,12 +1,13 @@
 package controller;
 
-import java.io.File;
+import java.awt.*;
+import java.io.*;
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,11 +16,17 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 public class ListController implements Initializable {
 	@FXML         
-	   ListView<String> listView;                
+	   ListView<String> listView; 
+	@FXML
+       private ImageView imageView;
+	@FXML
+	   private Text name;
 
 	   private ObservableList<String> obsList;              
 	  
@@ -27,13 +34,10 @@ public class ListController implements Initializable {
 	      // create an ObservableList 
 	      // from an ArrayList              
 	      obsList = FXCollections.observableArrayList(                               
-	                 "Giants",                               
-	                 "Patriots",                               
-	                 "Panthers",
-	                 "Broncos",
-	                 "Lions",
-	                 "49ers",
-	                 "Jaguars");               
+	                 "99 Problems",                               
+	                 "Ambitionz Az A Ridah",                               
+	                 "Blank Space",
+	                 "Bitches Ain't Shit");               
 	      listView.setItems(obsList); 
 	      
 	      // select the first item
@@ -46,9 +50,12 @@ public class ListController implements Initializable {
 	      .addListener(
 	    		  (obs, oldVal, newVal) -> 
 	    		  showItemInputDialog(mainStage));
-
 	   }
-
+	   
+	   public void addSong(ActionEvent e) {
+		   obsList.add(name.getText());
+	   }
+	   
 	   private void showItem(Stage mainStage) {                
 		   Alert alert = 
 				   new Alert(AlertType.INFORMATION);
@@ -81,14 +88,10 @@ public class ListController implements Initializable {
 		   if (result.isPresent()) { obsList.set(index, result.get()); }
 	   }
 
-	    @FXML
-	    private ImageView imageView;
-
 	    @Override
 	    public void initialize(URL location, ResourceBundle resources) {
 	        File file = new File("src/album.png");
 	        Image image = new Image(file.toURI().toString());
 	        imageView.setImage(image);
 	    }
- 
 }

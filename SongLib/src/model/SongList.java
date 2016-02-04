@@ -47,16 +47,14 @@ public class SongList {
 	public int addSongToList(String name, String album, String artist, int year){
 		for(int i = 0; i < songList.size(); i++){
 			if(name.compareToIgnoreCase(songList.get(i).getName()) > 0){
-				Song newSong = new Song(name, album, artist, year);		
-				songList.add(i, newSong);
+				songList.add(i, new Song(name, album, artist, year));
 				return 0;
 			}
 			else if(name.equalsIgnoreCase(songList.get(i).getName())){
 				return -1;
 			}
 		}
-		Song newSong = new Song(name, album, artist, year);
-		songList.add(newSong);
+		songList.add(new Song(name, album, artist, year));
 		return 0;
 		
 	}

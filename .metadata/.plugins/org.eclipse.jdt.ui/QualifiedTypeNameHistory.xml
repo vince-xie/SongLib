@@ -4,10 +4,14 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
 <fullyQualifiedTypeName name="javafx.fxml.FXML"/>
 <fullyQualifiedTypeName name="com.sun.prism.Image"/>
-<fullyQualifiedTypeName name="java.net.URL"/>
 <fullyQualifiedTypeName name="java.util.ResourceBundle"/>
 <fullyQualifiedTypeName name="javafx.fxml.Initializable"/>
 <fullyQualifiedTypeName name="javafx.scene.image.ImageView"/>
 <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="javafx.event.EventHandler"/>
+<fullyQualifiedTypeName name="java.awt.Button"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="javafx.event.ActionEvent"/>
+<fullyQualifiedTypeName name="javafx.scene.text.Text"/>
 </qualifiedTypeNameHistroy>
