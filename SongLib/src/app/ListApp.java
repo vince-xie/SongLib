@@ -1,11 +1,11 @@
 package app;
 
+import controller.ListController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import view.ListController;
 
 public class ListApp extends Application {
 
@@ -21,8 +21,9 @@ public class ListApp extends Application {
 	         loader.getController();
 	      listController.start(primaryStage);
 
-	      Scene scene = new Scene(root, 200, 300);
+	      Scene scene = new Scene(root, 500, 400);
 	      primaryStage.setScene(scene);
+	      primaryStage.setResizable(false);
 	      primaryStage.show(); 
 	}
 

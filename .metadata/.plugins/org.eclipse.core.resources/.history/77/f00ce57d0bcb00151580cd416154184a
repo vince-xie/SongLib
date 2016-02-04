@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListController">
+	
+    <ListView fx:id="listView" prefHeight="350.0" prefWidth="248.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="300" AnchorPane.topAnchor="10" />
+  	<Button layoutX="10.0" layoutY="355.0" mnemonicParsing="false" text="Add" />
+   	<Button layoutX="63.0" layoutY="355.0" mnemonicParsing="false" text="Edit" />
+  	<Button layoutX="143.0" layoutY="355.0" mnemonicParsing="false" text="Delete" />
+   	<ImageView fitHeight="242.0" fitWidth="338.0" layoutX="291.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" />
+   	<Text layoutX="219.0" layoutY="313.0" text="99 Problems" textAlignment="CENTER" wrappingWidth="299.93017578125" />
+   	<Text layoutX="330.0" layoutY="351.0" text="Artist: Jay-Z" />
+   	<Text layoutX="219.0" layoutY="387.0" text="Album: The Black Album" textAlignment="CENTER" />
+   	<Text layoutX="369.0" layoutY="387.0" text="Year: 2003" textAlignment="CENTER" wrappingWidth="149.42382721602917" />
+</AnchorPane>
