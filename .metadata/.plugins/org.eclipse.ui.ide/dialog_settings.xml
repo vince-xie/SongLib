@@ -5,6 +5,7 @@
 		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\edma_\Documents\Rutgers\Spring 2016\Soft Meth\Eclipse\ListView"/>
 			<item value="/Users/vincexie/Downloads/ListView"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">

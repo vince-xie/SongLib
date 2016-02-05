@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
@@ -18,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import view.SongInputDialog;
 
 
 public class ListController implements Initializable {
@@ -53,12 +53,52 @@ public class ListController implements Initializable {
 	   }
 	   
 	   public void addSong(ActionEvent e) {
-		   obsList.add(name.getText());
+		   SongInputDialog dlg = new SongInputDialog("Add Song");
+		   dlg.setContentText("Song name: ");
+		   
+		   dlg.showAndWait();
+		   String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
+		   
+		   if (song.isEmpty() || artist.isEmpty()) {
+			   Alert error = new Alert(AlertType.INFORMATION);
+			   error.setHeaderText("Error!");
+			   error.setContentText("Either artist or song name is missing!");
+			   error.show();
+		   }
+		   else {
+			   if (!year.isEmpty()) {
+				   try {
+					   int intyear = Integer.parseInt(year);
+				   } catch (Exception ex) {
+					   Alert error = new Alert(AlertType.INFORMATION);
+					   error.setHeaderText("Error!");
+					   error.setContentText("Year's invalid!");
+					   error.show();
+				   }
+			   }
+		   }
+		   
+		   //Make song and artist required while album and year are optional
+		   
+		   System.out.println(song + " " + artist + " " + album + " " + year);
+		   /*
+		   TextInputDialog songname = new TextInputDialog();
+		   songname.setHeaderText("Add New Song");
+		   songname.setContentText("Enter song name: ");
+		   */
+		   /*
+		   TextInputDialog artistname = new TextInputDialog();
+		   artistname.setHeaderText("Add New Artist");
+		   artistname.setContentText("Enter artist name: ");
+		   */
+		   
+		   //Optional<String> result = songname.showAndWait();
+		   //Optional<String> result2 = artistname.showAndWait();
+		   
 	   }
 	   
 	   private void showItem(Stage mainStage) {                
-		   Alert alert = 
-				   new Alert(AlertType.INFORMATION);
+		   Alert alert = new Alert(AlertType.INFORMATION);
 		   alert.initOwner(mainStage);
 		   alert.setTitle("List Item");
 		   alert.setHeaderText(
