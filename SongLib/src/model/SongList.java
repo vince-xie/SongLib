@@ -42,21 +42,20 @@ public class SongList {
 	 * @param album album of the song
 	 * @param artist artist of the song
 	 * @param year year of the song
-	 * @return 0 if successful, -1 if song already in list
+	 * @return index if successful, -1 if song already in list
 	 */
-	public int addSongToList(String name, String album, String artist, int year){
+	public int addSongToList(String name, String album, String artist, String year){
+		Song newSong = new Song(name, album, artist, year);
 		for(int i = 0; i < songList.size(); i++){
-			if(name.compareToIgnoreCase(songList.get(i).getName()) > 0){
-				songList.add(i, new Song(name, album, artist, year));
-				return 0;
-			}
-			else if(name.equalsIgnoreCase(songList.get(i).getName())){
+			if(newSong.compareTo(songList.get(i)) == 0 && artist.equals(songList.get(i).getArtist())){
 				return -1;
+			} else if(newSong.compareTo(songList.get(i)) <= 0){
+				songList.add(i, newSong);
+				return i;
 			}
 		}
 		songList.add(new Song(name, album, artist, year));
-		return 0;
-		
+		return songList.size() - 1;	
 	}
 	
 	/**
@@ -69,5 +68,15 @@ public class SongList {
 			return;
 		}
 		songList.remove(index);
+	}
+	
+	/**
+	 * Prints out the contents of the song list. For testing purposes.
+	 */
+	public void printList(){
+		for(int i = 0; i < songList.size(); i++){
+			System.out.println("Name: " + songList.get(i).getName() + " Artist: " + songList.get(i).getArtist() + " Album: " + songList.get(i).getAlbum() + " Year: " + songList.get(i).getYear());
+		}
+		System.out.println();
 	}
 }

@@ -1,11 +1,11 @@
 package model;
 
-public class Song {
+public class Song implements Comparable<Song>{
 	
 	private String name;
 	private String album;
 	private String artist;
-	private int year;
+	private String year;
 	
 	/**
 	 * Creates a new instance of a song.
@@ -15,7 +15,7 @@ public class Song {
 	 * @param artist artist of the song
 	 * @param year year of the song
 	 */
-	public Song(String name, String album, String artist, int year){
+	public Song(String name, String album, String artist, String year){
 		this.name = name;
 		this.album = album;
 		this.artist = artist;
@@ -50,7 +50,7 @@ public class Song {
 	 * Returns the year of the song
 	 * @return year of the song
 	 */
-	public int getYear(){
+	public String getYear(){
 		return year;
 	}
 	
@@ -82,7 +82,7 @@ public class Song {
 	 * Sets the year of the song
 	 * @param year
 	 */
-	public void setYear(int year){
+	public void setYear(String year){
 		this.year = year;
 	}
 	
@@ -92,5 +92,14 @@ public class Song {
 	 */
 	public String toString(){
 		return "Name: " + name + "\n Album: " + album + "Artist: " + artist + "\n Year: " + year;
+	}
+
+	/**
+	 * Compares ONLY the name of two songs
+	 * @return 0 if same name
+	 */
+	@Override
+	public int compareTo(Song o) {
+		return this.name.compareToIgnoreCase(o.name);
 	}
 }

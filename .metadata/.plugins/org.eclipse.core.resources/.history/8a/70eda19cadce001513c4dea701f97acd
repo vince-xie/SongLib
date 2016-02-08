@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ListController">
+	
+    <ListView fx:id="listView" prefHeight="350.0" prefWidth="248.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="300" AnchorPane.topAnchor="10" />
+  	<Button onAction="#addSong" layoutX="10.0" layoutY="355.0" mnemonicParsing="false" text="Add" />
+   	<Button layoutX="63.0" layoutY="355.0" mnemonicParsing="false" text="Edit" />
+  	<Button onAction="#removeSong" layoutX="143.0" layoutY="355.0" mnemonicParsing="false" text="Delete" />
+   	<ImageView fx:id="imageView" fitHeight="237.0" fitWidth="338.0" layoutX="233.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />	
+   	<Text fx:id="names" layoutX="215.0" layoutY="293.0" text="Name: " textAlignment="CENTER" wrappingWidth="250" />
+   	<Text fx:id="artists" layoutX="215.0" layoutY="330.0" text="Artist: " textAlignment="CENTER" wrappingWidth="250" />
+   	<Text fx:id="albums" layoutX="215.0" layoutY="367.0" text="Album: " textAlignment="CENTER" wrappingWidth="175" />
+   	<Text fx:id="years" layoutX="215.0" layoutY="404.0" text="Year: " textAlignment="CENTER" wrappingWidth="150" />
+</AnchorPane>

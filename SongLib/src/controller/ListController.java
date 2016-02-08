@@ -17,121 +17,134 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.SongList;
 import view.SongInputDialog;
 
 
 public class ListController implements Initializable {
 	@FXML         
-	   ListView<String> listView; 
+	ListView<String> listView; 
 	@FXML
-       private ImageView imageView;
+	private ImageView imageView;
 	@FXML
-	   private Text name;
+	private Text names;
+	@FXML
+	private Text artists;
+	@FXML
+	private Text albums;
+	@FXML
+	private Text years;
 
-	   private ObservableList<String> obsList;              
-	  
-	   public void start(Stage mainStage) {                
-	      // create an ObservableList 
-	      // from an ArrayList              
-	      obsList = FXCollections.observableArrayList(                               
-	                 "99 Problems",                               
-	                 "Ambitionz Az A Ridah",                               
-	                 "Blank Space",
-	                 "Bitches Ain't Shit");               
-	      listView.setItems(obsList); 
-	      
-	      // select the first item
-	      listView.getSelectionModel().select(0);
+	private ObservableList<String> obsList;     
+	private SongList songList;
 
-	      // set listener for the items
-	      listView
-	      .getSelectionModel()
-	      .selectedItemProperty()
-	      .addListener(
-	    		  (obs, oldVal, newVal) -> 
-	    		  showItemInputDialog(mainStage));
-	   }
-	   
-	   public void addSong(ActionEvent e) {
-		   SongInputDialog dlg = new SongInputDialog("Add Song");
-		   dlg.setContentText("Song name: ");
-		   
-		   dlg.showAndWait();
-		   String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
-		   
-		   if (song.isEmpty() || artist.isEmpty()) {
-			   Alert error = new Alert(AlertType.INFORMATION);
-			   error.setHeaderText("Error!");
-			   error.setContentText("Either artist or song name is missing!");
-			   error.show();
-		   }
-		   else {
-			   if (!year.isEmpty()) {
-				   try {
-					   int intyear = Integer.parseInt(year);
-				   } catch (Exception ex) {
-					   Alert error = new Alert(AlertType.INFORMATION);
-					   error.setHeaderText("Error!");
-					   error.setContentText("Year's invalid!");
-					   error.show();
-				   }
-			   }
-		   }
-		   
-		   //Make song and artist required while album and year are optional
-		   
-		   System.out.println(song + " " + artist + " " + album + " " + year);
-		   /*
-		   TextInputDialog songname = new TextInputDialog();
-		   songname.setHeaderText("Add New Song");
-		   songname.setContentText("Enter song name: ");
-		   */
-		   /*
-		   TextInputDialog artistname = new TextInputDialog();
-		   artistname.setHeaderText("Add New Artist");
-		   artistname.setContentText("Enter artist name: ");
-		   */
-		   
-		   //Optional<String> result = songname.showAndWait();
-		   //Optional<String> result2 = artistname.showAndWait();
-		   
-	   }
-	   
-	   private void showItem(Stage mainStage) {                
-		   Alert alert = new Alert(AlertType.INFORMATION);
-		   alert.initOwner(mainStage);
-		   alert.setTitle("List Item");
-		   alert.setHeaderText(
-				   "Selected list item properties");
+	public void start(Stage mainStage) {                
+		// create an ObservableList 
+		// from an ArrayList          
+		songList = new SongList();
+		obsList = FXCollections.observableArrayList();               
+		listView.setItems(obsList); 
 
-		   String content = "Index: " + 
-				   listView.getSelectionModel()
-		   .getSelectedIndex() + 
-		   "\nValue: " + 
-		   listView.getSelectionModel()
-		   .getSelectedItem();
+		// select the first item
+		listView.getSelectionModel().select(0);
 
-		   alert.setContentText(content);
-		   alert.showAndWait();
-	   }
-	   
-	   private void showItemInputDialog(Stage mainStage) {                
-		   String item = listView.getSelectionModel().getSelectedItem();
-		   int index = listView.getSelectionModel().getSelectedIndex();
+		// set listener for the items
+		listView.getSelectionModel()
+		.selectedItemProperty()
+		.addListener(
+				(obs, oldVal, newVal) -> 
+				showInfo(mainStage));
+	}
 
-		   TextInputDialog dialog = new TextInputDialog(item);
-		   dialog.initOwner(mainStage); dialog.setTitle("List Item");
-		   dialog.setHeaderText("Selected Item (Index: " + index + ")");
-		   dialog.setContentText("Enter name: ");
+	public void addSong(ActionEvent e) {
+		SongInputDialog dlg = new SongInputDialog("Add Song");
+		dlg.setContentText("Song name: ");
 
-		   Optional<String> result = dialog.showAndWait();
-		   if (result.isPresent()) { obsList.set(index, result.get()); }
-	   }
+		dlg.showAndWait();
+		String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
+		if (song.isEmpty() || artist.isEmpty()) {
+			Alert error = new Alert(AlertType.INFORMATION);
+			error.setHeaderText("Error!");
+			error.setContentText("Either artist or song name is missing!");
+			error.show();
+			return;
+		}
+		else if (!year.isEmpty()) {
+			try {
+				int intyear = Integer.parseInt(year);
+				if(intyear < 0){
+					Alert error = new Alert(AlertType.INFORMATION);
+					error.setHeaderText("Error!");
+					error.setContentText("Year is invalid!");
+					error.show();
+					return;
+				}
+			} catch (Exception ex) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setHeaderText("Error!");
+				error.setContentText("Year is invalid!");
+				error.show();
+				return;
+			}
+		}
+		int index = songList.addSongToList(song, album, artist, year);
+		if(index < 0){
+			Alert error = new Alert(AlertType.INFORMATION);
+			error.setHeaderText("Error!");
+			error.setContentText("Song with same name and artist already in list!");
+			error.show();
+			return;
+		}
+		obsList.add(index, song);
+		songList.printList();
+	}
 
-	    @Override
-	    public void initialize(URL location, ResourceBundle resources) {
-	        File file = new File("src/album.png");
-	        Image image = new Image(file.toURI().toString());
-	        imageView.setImage(image);
-	    }
+	public void removeSong(ActionEvent e){
+		int index = listView.getSelectionModel().getSelectedIndex();
+		if(index >= 0){
+			obsList.remove(index);
+			songList.deleteSongFromList(index);
+		}
+	}
+
+	private void showItem(Stage mainStage) {                
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.initOwner(mainStage);
+		alert.setTitle("List Item");
+		alert.setHeaderText(
+				"Selected list item properties");
+
+		String content = "Index: " + 
+				listView.getSelectionModel()
+		.getSelectedIndex() + 
+		"\nValue: " + 
+		listView.getSelectionModel()
+		.getSelectedItem();
+
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+
+	private void showInfo(Stage mainStage) {                
+		int index = listView.getSelectionModel().getSelectedIndex();
+		System.out.println(index);
+		if(index >= 0){
+			names.setText("Name: " + songList.getSongFromListIndex(index).getName());
+			artists.setText("Artist: " + songList.getSongFromListIndex(index).getArtist());
+			albums.setText("Album: " + songList.getSongFromListIndex(index).getAlbum());
+			years.setText("Year: " + songList.getSongFromListIndex(index).getYear());
+		} else {
+			names.setText("Name: ");
+			artists.setText("Artist: ");
+			albums.setText("Album: ");
+			years.setText("Year: ");
+		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		File file = new File("src/album.png");
+		Image image = new Image(file.toURI().toString());
+		imageView.setImage(image);
+	}
 }
