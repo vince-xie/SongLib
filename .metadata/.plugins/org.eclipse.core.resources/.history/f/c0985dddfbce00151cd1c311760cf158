@@ -104,8 +104,12 @@ public class ListController implements Initializable {
 				return;
 			}
 			obsList.add(index, song);
-		}	
-		//songList.printList();
+		}
+		else {
+			System.out.println("CANCEL NIGGA");
+		}
+		
+		songList.printList();
 	}
 
 	public void removeSong(ActionEvent e){
@@ -133,20 +137,14 @@ public class ListController implements Initializable {
 		dlg.setArtistText(selected.getArtist());
 		dlg.setAlbumText(selected.getAlbum());
 		dlg.setYearText(selected.getYear());
-		Optional<ButtonType> result = dlg.showAndWait();
-		
-		String ok = ButtonType.OK.getText();
-		String click = result.get().getText();
-		
-		if (click.equals(ok)) {
-			selected.setName(dlg.getSongText());
-			selected.setArtist(dlg.getArtistText());
-			selected.setAlbum(dlg.getAlbumText());
-			selected.setYear(dlg.getYearText());
-			obsList.remove(index);
-			songList.deleteSongFromList(index);
-			obsList.add(songList.addSongToList(selected), selected.getName());
-		}
+		dlg.showAndWait();
+		selected.setName(dlg.getSongText());
+		selected.setArtist(dlg.getArtistText());
+		selected.setAlbum(dlg.getAlbumText());
+		selected.setYear(dlg.getYearText());
+		obsList.remove(index);
+		songList.deleteSongFromList(index);
+		obsList.add(songList.addSongToList(selected), selected.getName());
 	}
 	
 	private void showItem(Stage mainStage) {                

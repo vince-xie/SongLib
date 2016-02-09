@@ -64,48 +64,48 @@ public class ListController implements Initializable {
 		
 		Optional<ButtonType> result = dlg.showAndWait();
 		
-		String ok = ButtonType.OK.getText();
-		String click = result.get().getText();
+		ButtonType ok = new ButtonType("Yes");
+        ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 		
-		if (click.equals(ok)) {
-			String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
-			Song newSong = new Song(song, album, artist, year);
-			if (song.isEmpty() || artist.isEmpty()) {
-				Alert error = new Alert(AlertType.INFORMATION);
-				error.setHeaderText("Error!");
-				error.setContentText("Either artist or song name is missing!");
-				error.show();
-				return;
-			}
-			else if (!year.isEmpty()) {
-				try {
-					int intyear = Integer.parseInt(year);
-					if(intyear < 0){
-						Alert error = new Alert(AlertType.INFORMATION);
-						error.setHeaderText("Error!");
-						error.setContentText("Year is invalid!");
-						error.show();
-						return;
-					}
-				} catch (Exception ex) {
+		System.out.println(cancel == result.get());
+		String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
+		Song newSong = new Song(song, album, artist, year);
+		if (song.isEmpty() || artist.isEmpty()) {
+			Alert error = new Alert(AlertType.INFORMATION);
+			error.setHeaderText("Error!");
+			error.setContentText("Either artist or song name is missing!");
+			error.show();
+			return;
+		}
+		else if (!year.isEmpty()) {
+			try {
+				int intyear = Integer.parseInt(year);
+				if(intyear < 0){
 					Alert error = new Alert(AlertType.INFORMATION);
 					error.setHeaderText("Error!");
 					error.setContentText("Year is invalid!");
 					error.show();
 					return;
 				}
-			}
-			int index = songList.addSongToList(newSong);
-			if(index < 0){
+			} catch (Exception ex) {
 				Alert error = new Alert(AlertType.INFORMATION);
 				error.setHeaderText("Error!");
-				error.setContentText("Song with same name and artist already in list!");
+				error.setContentText("Year is invalid!");
 				error.show();
 				return;
 			}
-			obsList.add(index, song);
-		}	
-		//songList.printList();
+		}
+		int index = songList.addSongToList(newSong);
+		if(index < 0){
+			Alert error = new Alert(AlertType.INFORMATION);
+			error.setHeaderText("Error!");
+			error.setContentText("Song with same name and artist already in list!");
+			error.show();
+			return;
+		}
+		obsList.add(index, song);
+		
+		songList.printList();
 	}
 
 	public void removeSong(ActionEvent e){
@@ -133,20 +133,14 @@ public class ListController implements Initializable {
 		dlg.setArtistText(selected.getArtist());
 		dlg.setAlbumText(selected.getAlbum());
 		dlg.setYearText(selected.getYear());
-		Optional<ButtonType> result = dlg.showAndWait();
-		
-		String ok = ButtonType.OK.getText();
-		String click = result.get().getText();
-		
-		if (click.equals(ok)) {
-			selected.setName(dlg.getSongText());
-			selected.setArtist(dlg.getArtistText());
-			selected.setAlbum(dlg.getAlbumText());
-			selected.setYear(dlg.getYearText());
-			obsList.remove(index);
-			songList.deleteSongFromList(index);
-			obsList.add(songList.addSongToList(selected), selected.getName());
-		}
+		dlg.showAndWait();
+		selected.setName(dlg.getSongText());
+		selected.setArtist(dlg.getArtistText());
+		selected.setAlbum(dlg.getAlbumText());
+		selected.setYear(dlg.getYearText());
+		obsList.remove(index);
+		songList.deleteSongFromList(index);
+		obsList.add(songList.addSongToList(selected), selected.getName());
 	}
 	
 	private void showItem(Stage mainStage) {                

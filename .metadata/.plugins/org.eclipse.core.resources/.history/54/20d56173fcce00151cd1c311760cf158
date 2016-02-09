@@ -104,8 +104,9 @@ public class ListController implements Initializable {
 				return;
 			}
 			obsList.add(index, song);
-		}	
-		//songList.printList();
+		}
+		
+		songList.printList();
 	}
 
 	public void removeSong(ActionEvent e){

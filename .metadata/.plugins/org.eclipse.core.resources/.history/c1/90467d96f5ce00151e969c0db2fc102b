@@ -13,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -62,12 +61,13 @@ public class ListController implements Initializable {
 		SongInputDialog dlg = new SongInputDialog("Add Song");
 		dlg.setContentText("Song name: ");
 		
-		Optional<ButtonType> result = dlg.showAndWait();
-		
-		String ok = ButtonType.OK.getText();
-		String click = result.get().getText();
-		
-		if (click.equals(ok)) {
+		Optional<String> result = dlg.showAndWait();
+		final Button ok = (Button)dlg.getDialogPane().lookupButton(ButtonType.OK);
+		ok.addEventFilter(ActionEvent.ACTION, event -> 
+			System.out.println("Pressed ok")
+		);
+		System.out.println(result);
+		if (result.isPresent()) {
 			String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
 			Song newSong = new Song(song, album, artist, year);
 			if (song.isEmpty() || artist.isEmpty()) {
@@ -104,8 +104,15 @@ public class ListController implements Initializable {
 				return;
 			}
 			obsList.add(index, song);
-		}	
-		//songList.printList();
+		} 
+		else {
+			Alert cancelled = new Alert(AlertType.INFORMATION);
+			cancelled.setContentText("Cancel was pressed!");
+			cancelled.show();
+			return;
+		}
+		
+		songList.printList();
 	}
 
 	public void removeSong(ActionEvent e){
@@ -133,20 +140,14 @@ public class ListController implements Initializable {
 		dlg.setArtistText(selected.getArtist());
 		dlg.setAlbumText(selected.getAlbum());
 		dlg.setYearText(selected.getYear());
-		Optional<ButtonType> result = dlg.showAndWait();
-		
-		String ok = ButtonType.OK.getText();
-		String click = result.get().getText();
-		
-		if (click.equals(ok)) {
-			selected.setName(dlg.getSongText());
-			selected.setArtist(dlg.getArtistText());
-			selected.setAlbum(dlg.getAlbumText());
-			selected.setYear(dlg.getYearText());
-			obsList.remove(index);
-			songList.deleteSongFromList(index);
-			obsList.add(songList.addSongToList(selected), selected.getName());
-		}
+		dlg.showAndWait();
+		selected.setName(dlg.getSongText());
+		selected.setArtist(dlg.getArtistText());
+		selected.setAlbum(dlg.getAlbumText());
+		selected.setYear(dlg.getYearText());
+		obsList.remove(index);
+		songList.deleteSongFromList(index);
+		obsList.add(songList.addSongToList(selected), selected.getName());
 	}
 	
 	private void showItem(Stage mainStage) {                
