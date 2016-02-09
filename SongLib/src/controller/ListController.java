@@ -12,11 +12,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Song;
 import model.SongList;
 import view.SongInputDialog;
 
@@ -59,43 +59,49 @@ public class ListController implements Initializable {
 	public void addSong(ActionEvent e) {
 		SongInputDialog dlg = new SongInputDialog("Add Song");
 		dlg.setContentText("Song name: ");
-
-		dlg.showAndWait();
-		String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
-		if (song.isEmpty() || artist.isEmpty()) {
-			Alert error = new Alert(AlertType.INFORMATION);
-			error.setHeaderText("Error!");
-			error.setContentText("Either artist or song name is missing!");
-			error.show();
-			return;
-		}
-		else if (!year.isEmpty()) {
-			try {
-				int intyear = Integer.parseInt(year);
-				if(intyear < 0){
+		
+		Optional<String> result = dlg.showAndWait();
+		if (result.isPresent()) {
+			String song = dlg.getSongText(), artist = dlg.getArtistText(), album = dlg.getAlbumText(), year = dlg.getYearText();
+			Song newSong = new Song(song, album, artist, year);
+			if (song.isEmpty() || artist.isEmpty()) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setHeaderText("Error!");
+				error.setContentText("Either artist or song name is missing!");
+				error.show();
+				return;
+			}
+			else if (!year.isEmpty()) {
+				try {
+					int intyear = Integer.parseInt(year);
+					if(intyear < 0){
+						Alert error = new Alert(AlertType.INFORMATION);
+						error.setHeaderText("Error!");
+						error.setContentText("Year is invalid!");
+						error.show();
+						return;
+					}
+				} catch (Exception ex) {
 					Alert error = new Alert(AlertType.INFORMATION);
 					error.setHeaderText("Error!");
 					error.setContentText("Year is invalid!");
 					error.show();
 					return;
 				}
-			} catch (Exception ex) {
+			}
+			int index = songList.addSongToList(newSong);
+			if(index < 0){
 				Alert error = new Alert(AlertType.INFORMATION);
 				error.setHeaderText("Error!");
-				error.setContentText("Year is invalid!");
+				error.setContentText("Song with same name and artist already in list!");
 				error.show();
 				return;
 			}
+			obsList.add(index, song);
+		} else {
+		    System.out.println("Fuck you");
 		}
-		int index = songList.addSongToList(song, album, artist, year);
-		if(index < 0){
-			Alert error = new Alert(AlertType.INFORMATION);
-			error.setHeaderText("Error!");
-			error.setContentText("Song with same name and artist already in list!");
-			error.show();
-			return;
-		}
-		obsList.add(index, song);
+		
 		songList.printList();
 	}
 
@@ -106,7 +112,34 @@ public class ListController implements Initializable {
 			songList.deleteSongFromList(index);
 		}
 	}
-
+	
+	public void editSong(ActionEvent e) {
+		int index = listView.getSelectionModel().getSelectedIndex();
+		if (index < 0) {
+			Alert error = new Alert(AlertType.INFORMATION);
+			error.setHeaderText("Error!");
+			error.setContentText("No song selected!");
+			error.show();
+			return;
+		}
+		SongInputDialog dlg = new SongInputDialog("Edit Song");
+		dlg.setContentText("Edit song info: ");
+		Song selected = songList.getSongFromListIndex(index);
+		
+		dlg.setSongText(selected.getName());
+		dlg.setArtistText(selected.getArtist());
+		dlg.setAlbumText(selected.getAlbum());
+		dlg.setYearText(selected.getYear());
+		dlg.showAndWait();
+		selected.setName(dlg.getSongText());
+		selected.setArtist(dlg.getArtistText());
+		selected.setAlbum(dlg.getAlbumText());
+		selected.setYear(dlg.getYearText());
+		obsList.remove(index);
+		songList.deleteSongFromList(index);
+		obsList.add(songList.addSongToList(selected), selected.getName());
+	}
+	
 	private void showItem(Stage mainStage) {                
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.initOwner(mainStage);
@@ -127,7 +160,7 @@ public class ListController implements Initializable {
 
 	private void showInfo(Stage mainStage) {                
 		int index = listView.getSelectionModel().getSelectedIndex();
-		System.out.println(index);
+		//System.out.println(index);
 		if(index >= 0){
 			names.setText("Name: " + songList.getSongFromListIndex(index).getName());
 			artists.setText("Artist: " + songList.getSongFromListIndex(index).getArtist());

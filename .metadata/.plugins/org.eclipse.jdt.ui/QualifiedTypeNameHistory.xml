@@ -16,15 +16,16 @@
 <fullyQualifiedTypeName name="model.SongList"/>
 <fullyQualifiedTypeName name="javafx.geometry.Insets"/>
 <fullyQualifiedTypeName name="javafx.util.Pair"/>
-<fullyQualifiedTypeName name="javafx.scene.control.ButtonType"/>
-<fullyQualifiedTypeName name="javafx.scene.control.Dialog"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
 <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
 <fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
 <fullyQualifiedTypeName name="javafx.scene.control.ChoiceBox"/>
 <fullyQualifiedTypeName name="javafx.scene.control.ButtonBar.ButtonData"/>
-<fullyQualifiedTypeName name="javafx.scene.control.Button"/>
 <fullyQualifiedTypeName name="javafx.scene.control.ButtonBar"/>
 <fullyQualifiedTypeName name="view.ImageEffectInputDialog"/>
 <fullyQualifiedTypeName name="view.SongInputDialog"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Button"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ButtonType"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Dialog"/>
+<fullyQualifiedTypeName name="model.Song"/>
 </qualifiedTypeNameHistroy>

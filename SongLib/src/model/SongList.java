@@ -44,17 +44,16 @@ public class SongList {
 	 * @param year year of the song
 	 * @return index if successful, -1 if song already in list
 	 */
-	public int addSongToList(String name, String album, String artist, String year){
-		Song newSong = new Song(name, album, artist, year);
+	public int addSongToList(Song song){
 		for(int i = 0; i < songList.size(); i++){
-			if(newSong.compareTo(songList.get(i)) == 0 && artist.equals(songList.get(i).getArtist())){
+			if(song.compareTo(songList.get(i)) == 0 && song.getArtist().equals(songList.get(i).getArtist())){
 				return -1;
-			} else if(newSong.compareTo(songList.get(i)) <= 0){
-				songList.add(i, newSong);
+			} else if(song.compareTo(songList.get(i)) <= 0){
+				songList.add(i, song);
 				return i;
 			}
 		}
-		songList.add(new Song(name, album, artist, year));
+		songList.add(song);
 		return songList.size() - 1;	
 	}
 	

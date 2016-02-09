@@ -61,4 +61,20 @@ public class SongInputDialog extends Dialog {
     public String getYearText() {
     	return yeartext.getText();
     }
+    
+    public void setSongText(String name) {
+    	songtext.setText(name);
+    }
+    
+    public void setArtistText(String name) {
+    	artisttext.setText(name);
+    }
+    
+    public void setAlbumText(String name) {
+    	albumtext.setText(name);
+    }
+    
+    public void setYearText(String year) {
+    	yeartext.setText(year);
+    }
 }
