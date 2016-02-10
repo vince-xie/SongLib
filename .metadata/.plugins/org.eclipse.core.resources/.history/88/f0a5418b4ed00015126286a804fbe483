@@ -6,7 +6,6 @@ public class Song implements Comparable<Song>{
 	private String album;
 	private String artist;
 	private String year;
-	private int id;
 	
 	/**
 	 * Creates a new instance of a song.
@@ -21,7 +20,6 @@ public class Song implements Comparable<Song>{
 		this.album = album;
 		this.artist = artist;
 		this.year = year;
-		this.id = 1 + (int)(Math.random() * 10000);
 	}
 
 	/**
@@ -54,14 +52,6 @@ public class Song implements Comparable<Song>{
 	 */
 	public String getYear(){
 		return year;
-	}
-	
-	/**
-	 * Returns the song's id
-	 * @return id of the song
-	 */
-	public int getID() {
-		return id;
 	}
 	
 	/**
@@ -102,11 +92,6 @@ public class Song implements Comparable<Song>{
 	 */
 	public String toString(){
 		return "Name: " + name + "\nAlbum: " + album + "\nArtist: " + artist + "\nYear: " + year;
-	}
-	
-	public String toJSON() {
-		return "{id: " + id + ", song: \"" + name + "\", artist: " + "\"" + artist + "\", album: \"" + album + "\", year: \"" + year + "\"}";
-
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.io.*;
 
 public class SongList {
 	
@@ -59,13 +58,6 @@ public class SongList {
 	}
 	
 	/**
-	 * @return the song list of songs
-	 */
-	public ArrayList<Song> getSongList() {
-		return songList;
-	}
-	
-	/**
 	 * Deletes a song from the SongList
 	 * 
 	 * @param index of the song
@@ -82,32 +74,8 @@ public class SongList {
 	 */
 	public void printList(){
 		for(int i = 0; i < songList.size(); i++){
-			//System.out.println("Name: " + songList.get(i).getName() + " Artist: " + songList.get(i).getArtist() + " Album: " + songList.get(i).getAlbum() + " Year: " + songList.get(i).getYear());
-			System.out.println(songList.get(i).toJSON());
+			System.out.println("Name: " + songList.get(i).getName() + " Artist: " + songList.get(i).getArtist() + " Album: " + songList.get(i).getAlbum() + " Year: " + songList.get(i).getYear());
 		}
 		System.out.println();
-	}
-	
-	/**
-	 * Writes the list of songs to a file
-	 * @param list of songs
-	 * @throws FileNotFoundException
-	 * @throws UnsupportedEncodingException
-	 */
-	public void writeFile(ArrayList<Song> songs) throws FileNotFoundException, UnsupportedEncodingException {
-		Writer writer = null;
-		try {
-		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("song-list.json"), "utf-8"));
-		    for(Song song : songs){
-				writer.write(song.toJSON() + "\n");
-			}
-		}
-		catch (IOException ex) {}
-		finally {
-		   try {
-			   writer.close();
-		   } 
-		   catch (Exception ex) {}
-		}
 	}
 }

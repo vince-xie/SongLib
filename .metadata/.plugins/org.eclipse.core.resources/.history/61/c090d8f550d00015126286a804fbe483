@@ -1,11 +1,12 @@
 package model;
 
-public class Song {
+public class Song implements Comparable<Song>{
 	
 	private String name;
 	private String album;
 	private String artist;
-	private int year;
+	private String year;
+	private int id;
 	
 	/**
 	 * Creates a new instance of a song.
@@ -15,11 +16,12 @@ public class Song {
 	 * @param artist artist of the song
 	 * @param year year of the song
 	 */
-	public Song(String name, String album, String artist, int year){
+	public Song(String name, String album, String artist, String year){
 		this.name = name;
 		this.album = album;
 		this.artist = artist;
 		this.year = year;
+		this.id = 1 + (int)(Math.random() * 10000);
 	}
 
 	/**
@@ -50,8 +52,16 @@ public class Song {
 	 * Returns the year of the song
 	 * @return year of the song
 	 */
-	public int getYear(){
+	public String getYear(){
 		return year;
+	}
+	
+	/**
+	 * Returns the song's id
+	 * @return id of the song
+	 */
+	public int getID() {
+		return id;
 	}
 	
 	/**
@@ -82,7 +92,7 @@ public class Song {
 	 * Sets the year of the song
 	 * @param year
 	 */
-	public void setYear(int year){
+	public void setYear(String year){
 		this.year = year;
 	}
 	
@@ -91,6 +101,20 @@ public class Song {
 	 * @return string representation of a song
 	 */
 	public String toString(){
-		return "Name: " + name + "\n Album: " + album + "Artist: " + artist + "\n Year: " + year;
+		return "Name: " + name + "\nAlbum: " + album + "\nArtist: " + artist + "\nYear: " + year;
+	}
+	
+	public String toJSON() {
+		return "{id: " + id + ", song: \"" + name + "\", artist: " + "\"" + artist + "\", }";
+
+	}
+
+	/**
+	 * Compares ONLY the name of two songs
+	 * @return 0 if same name
+	 */
+	@Override
+	public int compareTo(Song o) {
+		return this.name.compareToIgnoreCase(o.name);
 	}
 }

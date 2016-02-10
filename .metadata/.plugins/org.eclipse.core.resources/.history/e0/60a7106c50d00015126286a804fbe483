@@ -103,11 +103,6 @@ public class Song implements Comparable<Song>{
 	public String toString(){
 		return "Name: " + name + "\nAlbum: " + album + "\nArtist: " + artist + "\nYear: " + year;
 	}
-	
-	public String toJSON() {
-		return "{id: " + id + ", song: \"" + name + "\", artist: " + "\"" + artist + "\", album: \"" + album + "\", year: \"" + year + "\"}";
-
-	}
 
 	/**
 	 * Compares ONLY the name of two songs

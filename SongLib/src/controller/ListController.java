@@ -105,7 +105,7 @@ public class ListController implements Initializable {
 			}
 			obsList.add(index, song);
 		}	
-		//songList.printList();
+		songList.printList();
 	}
 
 	public void removeSong(ActionEvent e){
@@ -116,7 +116,7 @@ public class ListController implements Initializable {
 		}
 	}
 	
-	public void editSong(ActionEvent e) {
+	public void editSong(ActionEvent e) throws FileNotFoundException, UnsupportedEncodingException {
 		int index = listView.getSelectionModel().getSelectedIndex();
 		if (index < 0) {
 			Alert error = new Alert(AlertType.INFORMATION);
@@ -147,6 +147,7 @@ public class ListController implements Initializable {
 			songList.deleteSongFromList(index);
 			obsList.add(songList.addSongToList(selected), selected.getName());
 		}
+		songList.writeFile(songList.getSongList());
 	}
 	
 	private void showItem(Stage mainStage) {                

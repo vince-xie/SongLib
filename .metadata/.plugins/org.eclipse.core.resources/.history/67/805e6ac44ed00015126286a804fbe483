@@ -82,8 +82,7 @@ public class SongList {
 	 */
 	public void printList(){
 		for(int i = 0; i < songList.size(); i++){
-			//System.out.println("Name: " + songList.get(i).getName() + " Artist: " + songList.get(i).getArtist() + " Album: " + songList.get(i).getAlbum() + " Year: " + songList.get(i).getYear());
-			System.out.println(songList.get(i).toJSON());
+			System.out.println("Name: " + songList.get(i).getName() + " Artist: " + songList.get(i).getArtist() + " Album: " + songList.get(i).getAlbum() + " Year: " + songList.get(i).getYear());
 		}
 		System.out.println();
 	}
@@ -97,9 +96,9 @@ public class SongList {
 	public void writeFile(ArrayList<Song> songs) throws FileNotFoundException, UnsupportedEncodingException {
 		Writer writer = null;
 		try {
-		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("song-list.json"), "utf-8"));
+		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("song-list"), "utf-8"));
 		    for(Song song : songs){
-				writer.write(song.toJSON() + "\n");
+				writer.write(song.toString() + "\n\n");
 			}
 		}
 		catch (IOException ex) {}

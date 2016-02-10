@@ -97,7 +97,7 @@ public class SongList {
 	public void writeFile(ArrayList<Song> songs) throws FileNotFoundException, UnsupportedEncodingException {
 		Writer writer = null;
 		try {
-		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("song-list.json"), "utf-8"));
+		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("song-list"), "utf-8"));
 		    for(Song song : songs){
 				writer.write(song.toJSON() + "\n");
 			}
