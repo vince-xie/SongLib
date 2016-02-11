@@ -28,4 +28,5 @@
 <fullyQualifiedTypeName name="javafx.scene.control.ButtonBar.ButtonData"/>
 <fullyQualifiedTypeName name="javafx.scene.control.Dialog"/>
 <fullyQualifiedTypeName name="model.Song"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
 </qualifiedTypeNameHistroy>

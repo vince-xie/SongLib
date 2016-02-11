@@ -120,21 +120,4 @@ public class Song implements Comparable<Song>{
 	public int compareTo(Song o) {
 		return this.name.compareToIgnoreCase(o.name);
 	}
-	
-	/**
-	 * Compares ONLY the name of two songs
-	 * @return 0 if same name
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if(o == null || !(o instanceof Song)){
-			return false;
-		}
-		Song s = (Song)o;
-		if(this.compareTo(s) == 0 && this.artist.equalsIgnoreCase(s.getArtist())){
-			return true;
-		}
-		return false;
-	}
-	
 }
