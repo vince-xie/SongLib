@@ -104,9 +104,8 @@ public class Song implements Comparable<Song>{
 		return "Name: " + name + "\nAlbum: " + album + "\nArtist: " + artist + "\nYear: " + year;
 	}
 	
-	public String toJSON() {
-		return "{id: " + id + ", song: \"" + name + "\", artist: " + "\"" + artist + "\", album: \"" + album + "\", year: \"" + year + "\"}";
-
+	public String toCSV() {
+		return id + ",\"" + name + "\",\"" + artist + "\",\"" + album + "\",\"" + year + "\"";
 	}
 
 	/**

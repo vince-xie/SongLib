@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class SongInputDialog extends Dialog {
+public class SongInputDialog extends Dialog<ButtonType> {
 
     private ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
     private ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);

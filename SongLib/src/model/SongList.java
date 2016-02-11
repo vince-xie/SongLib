@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.*;
 
 public class SongList {
@@ -83,7 +84,7 @@ public class SongList {
 	public void printList(){
 		for(int i = 0; i < songList.size(); i++){
 			//System.out.println("Name: " + songList.get(i).getName() + " Artist: " + songList.get(i).getArtist() + " Album: " + songList.get(i).getAlbum() + " Year: " + songList.get(i).getYear());
-			System.out.println(songList.get(i).toJSON());
+			System.out.println(songList.get(i).toCSV());
 		}
 		System.out.println();
 	}
@@ -97,9 +98,9 @@ public class SongList {
 	public void writeFile(ArrayList<Song> songs) throws FileNotFoundException, UnsupportedEncodingException {
 		Writer writer = null;
 		try {
-		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("song-list.json"), "utf-8"));
+		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("song-list.csv"), "utf-8"));
 		    for(Song song : songs){
-				writer.write(song.toJSON() + "\n");
+				writer.write(song.toCSV() + "\n");
 			}
 		}
 		catch (IOException ex) {}
@@ -108,6 +109,33 @@ public class SongList {
 			   writer.close();
 		   } 
 		   catch (Exception ex) {}
+		}
+	}
+	
+	/**
+	 * Retrieves songs from a file (to be used at application start-up)
+	 * @param fileName name of the file containing pre-existing songs
+	 */
+	public void getSongsFromFile(String fileName) {
+		File file = new File(fileName);
+		try{
+			@SuppressWarnings("resource")
+			Scanner scan = new Scanner(file);
+			String line;
+			while (scan.hasNextLine()) {
+				line = scan.next();
+				String[] info = line.split(",");
+				String name = info[1].substring(1, info[1].length() - 1);
+				String artist = info[2].substring(1, info[2].length() - 1);
+				String album = info[3].substring(1, info[3].length() - 1);
+				String year = info[4].substring(1, info[4].length() - 1);
+				Song song = new Song(name, album, artist, year);
+				addSongToList(song);
+				//words.add(word);
+			}
+		}
+		catch(FileNotFoundException e){
+			e.printStackTrace();
 		}
 	}
 }

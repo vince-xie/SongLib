@@ -12,8 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
+
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,7 +57,7 @@ public class ListController implements Initializable {
 				showInfo(mainStage));
 	}
 
-	public void addSong(ActionEvent e) {
+	public void addSong(ActionEvent e) throws FileNotFoundException, UnsupportedEncodingException {
 		SongInputDialog dlg = new SongInputDialog("Add Song");
 		dlg.setContentText("Song name: ");
 		
@@ -106,6 +105,7 @@ public class ListController implements Initializable {
 			obsList.add(index, song);
 		}	
 		songList.printList();
+		songList.writeFile(songList.getSongList());
 	}
 
 	public void removeSong(ActionEvent e){
@@ -139,17 +139,27 @@ public class ListController implements Initializable {
 		String click = result.get().getText();
 		
 		if (click.equals(ok)) {
-			selected.setName(dlg.getSongText());
-			selected.setArtist(dlg.getArtistText());
-			selected.setAlbum(dlg.getAlbumText());
-			selected.setYear(dlg.getYearText());
-			obsList.remove(index);
-			songList.deleteSongFromList(index);
-			obsList.add(songList.addSongToList(selected), selected.getName());
+			Song newSong = new Song(dlg.getSongText(), dlg.getAlbumText(), dlg.getArtistText(), dlg.getYearText());
+			int newIndex = songList.addSongToList(newSong);
+			if (newIndex < 0) {
+				Alert error = new Alert(AlertType.INFORMATION);
+				error.setHeaderText("Error!");
+				error.setContentText("Song with same name and artist already in list!");
+				error.show();
+				return;
+			}
+			else {
+				int indexOfOld = songList.getSongList().indexOf(selected);
+				obsList.remove(index);
+				songList.deleteSongFromList(indexOfOld);
+				obsList.add(newIndex, newSong.getName());	
+			}
 		}
+		songList.printList();
 		songList.writeFile(songList.getSongList());
 	}
 	
+	/*
 	private void showItem(Stage mainStage) {                
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.initOwner(mainStage);
@@ -167,7 +177,8 @@ public class ListController implements Initializable {
 		alert.setContentText(content);
 		alert.showAndWait();
 	}
-
+	*/
+	
 	private void showInfo(Stage mainStage) {                
 		int index = listView.getSelectionModel().getSelectedIndex();
 		//System.out.println(index);
