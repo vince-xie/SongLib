@@ -45,16 +45,8 @@ public class ListController implements Initializable {
 		songList = new SongList();
 		obsList = FXCollections.observableArrayList();               
 		listView.setItems(obsList); 
-
-		// select the first item
 		listView.getSelectionModel().select(0);
-
-		// set listener for the items
-		listView.getSelectionModel()
-		.selectedItemProperty()
-		.addListener(
-				(obs, oldVal, newVal) -> 
-				showInfo(mainStage));
+		listView.setOnMouseClicked((e) -> showInfo(mainStage));
 	}
 
 	public void addSong(ActionEvent e) throws FileNotFoundException, UnsupportedEncodingException {
@@ -158,26 +150,6 @@ public class ListController implements Initializable {
 		songList.printList();
 		songList.writeFile(songList.getSongList());
 	}
-	
-	/*
-	private void showItem(Stage mainStage) {                
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.initOwner(mainStage);
-		alert.setTitle("List Item");
-		alert.setHeaderText(
-				"Selected list item properties");
-
-		String content = "Index: " + 
-				listView.getSelectionModel()
-		.getSelectedIndex() + 
-		"\nValue: " + 
-		listView.getSelectionModel()
-		.getSelectedItem();
-
-		alert.setContentText(content);
-		alert.showAndWait();
-	}
-	*/
 	
 	private void showInfo(Stage mainStage) {                
 		int index = listView.getSelectionModel().getSelectedIndex();

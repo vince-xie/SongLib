@@ -48,9 +48,15 @@ public class SongList {
 	 */
 	public int addSongToList(Song song){
 		for(int i = 0; i < songList.size(); i++){
-			if(song.compareTo(songList.get(i)) == 0 && song.getArtist().equals(songList.get(i).getArtist())){
+			if(song.compareTo(songList.get(i)) == 0 && song.getArtist().equalsIgnoreCase(songList.get(i).getArtist())){
 				return -1;
-			} else if(song.compareTo(songList.get(i)) <= 0){
+			} else if (song.compareTo(songList.get(i)) == 0){
+				if(song.getArtist().compareToIgnoreCase(songList.get(i).getArtist()) > 0){
+					continue;
+				}
+				songList.add(i, song);
+				return i;
+			} else if(song.compareTo(songList.get(i)) < 0){
 				songList.add(i, song);
 				return i;
 			}
@@ -83,7 +89,6 @@ public class SongList {
 	 */
 	public void printList(){
 		for(int i = 0; i < songList.size(); i++){
-			//System.out.println("Name: " + songList.get(i).getName() + " Artist: " + songList.get(i).getArtist() + " Album: " + songList.get(i).getAlbum() + " Year: " + songList.get(i).getYear());
 			System.out.println(songList.get(i).toCSV());
 		}
 		System.out.println();

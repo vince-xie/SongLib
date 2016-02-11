@@ -104,6 +104,10 @@ public class Song implements Comparable<Song>{
 		return "Name: " + name + "\nAlbum: " + album + "\nArtist: " + artist + "\nYear: " + year;
 	}
 	
+	/**
+	 * Returns a CSV representation of a song
+	 * @return CSV representation of a song
+	 */
 	public String toCSV() {
 		return id + ",\"" + name + "\",\"" + artist + "\",\"" + album + "\",\"" + year + "\"";
 	}
