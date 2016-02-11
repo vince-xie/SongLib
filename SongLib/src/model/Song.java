@@ -118,7 +118,11 @@ public class Song implements Comparable<Song>{
 	 */
 	@Override
 	public int compareTo(Song o) {
-		return this.name.compareToIgnoreCase(o.name);
+		int firstCheck = this.name.compareToIgnoreCase(o.name);
+		if (firstCheck == 0) {
+			return this.artist.compareToIgnoreCase(o.artist);
+		}
+		return firstCheck;
 	}
 	
 	/**

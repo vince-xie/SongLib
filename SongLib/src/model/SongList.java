@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
 
 public class SongList {
@@ -63,6 +62,15 @@ public class SongList {
 		}
 		songList.add(song);
 		return songList.size() - 1;	
+	}
+	
+	/**
+	 * Returns the index of a song if the song is contained in songList
+	 * @param s
+	 * @return i if the song is found, -1 otherwise
+	 */
+	public int getSongIndex(Song s) {
+		return Collections.binarySearch(songList, s);
 	}
 	
 	/**

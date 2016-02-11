@@ -95,6 +95,7 @@ public class ListController implements Initializable {
 				return;
 			}
 			obsList.add(index, song);
+			System.out.println(songList.getSongIndex(newSong));
 		}	
 		songList.printList();
 		songList.writeFile(songList.getSongList());
@@ -132,8 +133,8 @@ public class ListController implements Initializable {
 		
 		if (click.equals(ok)) {
 			Song newSong = new Song(dlg.getSongText(), dlg.getAlbumText(), dlg.getArtistText(), dlg.getYearText());
-			int newIndex = songList.addSongToList(newSong);
-			if (newIndex < 0) {
+			int newIndex = songList.getSongIndex(newSong);
+			if (newIndex >= 0) {
 				Alert error = new Alert(AlertType.INFORMATION);
 				error.setHeaderText("Error!");
 				error.setContentText("Song with same name and artist already in list!");
@@ -141,10 +142,10 @@ public class ListController implements Initializable {
 				return;
 			}
 			else {
-				int indexOfOld = songList.getSongList().indexOf(selected);
 				obsList.remove(index);
-				songList.deleteSongFromList(indexOfOld);
-				obsList.add(newIndex, newSong.getName());	
+				songList.deleteSongFromList(index);
+				newIndex = songList.addSongToList(newSong);
+				obsList.add(newIndex, newSong.getName());
 			}
 		}
 		songList.printList();
