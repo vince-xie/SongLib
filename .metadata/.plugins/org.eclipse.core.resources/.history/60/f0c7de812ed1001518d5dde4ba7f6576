@@ -1,5 +1,3 @@
-//Edmond Wu & Vincent Xie
-
 package controller;
 
 import java.io.*;
@@ -102,9 +100,7 @@ public class ListController implements Initializable {
 				return;
 			}
 			obsList.add(index, song);
-			listView.getSelectionModel().select(index);
-			showInfo();
-		}
+		}	
 		songList.writeFile(songList.getSongList());
 	}
 
@@ -164,6 +160,7 @@ public class ListController implements Initializable {
 	
 	private void showInfo() {                
 		int index = listView.getSelectionModel().getSelectedIndex();
+		//System.out.println(index);
 		if(index >= 0){
 			names.setText("Name: " + songList.getSongFromListIndex(index).getName());
 			artists.setText("Artist: " + songList.getSongFromListIndex(index).getArtist());
