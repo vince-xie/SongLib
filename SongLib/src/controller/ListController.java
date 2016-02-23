@@ -58,6 +58,7 @@ public class ListController implements Initializable {
 
 	public void addSong(ActionEvent e) throws FileNotFoundException, UnsupportedEncodingException {
 		SongInputDialog dlg = new SongInputDialog("Add Song");
+		dlg.setHeaderText("Song must have at least name and artist");
 		dlg.setContentText("Song name: ");
 		
 		Optional<ButtonType> result = dlg.showAndWait();
